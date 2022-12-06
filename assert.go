@@ -40,3 +40,17 @@ func LE[T Number](t *testing.T, a, b T) {
 	}
 	t.Fatalf("%v > %v", a, b)
 }
+
+func Nil(t *testing.T, v any) {
+	if v == nil {
+		return
+	}
+	t.Fatalf("%v was not nil", v)
+}
+
+func NotNil(t *testing.T, v any) {
+	if v != nil {
+		return
+	}
+	t.Fatalf("%v was nil", v)
+}

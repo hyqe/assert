@@ -63,3 +63,11 @@ func NotNil(t *testing.T, v any) {
 	}
 	t.Fatalf("%v was nil", v)
 }
+
+func True(t *testing.T, b bool) {
+	Want(t, true, b)
+}
+
+func False(t *testing.T, b bool) {
+	Want(t, false, b)
+}

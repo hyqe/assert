@@ -71,3 +71,15 @@ func True(t *testing.T, b bool) {
 func False(t *testing.T, b bool) {
 	Want(t, false, b)
 }
+
+func NoErr(t *testing.T, err error) {
+	if err != nil {
+		t.Fatalf("error was not nil: %v", err)
+	}
+}
+
+func Err(t *testing.T, err error) {
+	if err == nil {
+		t.Fatalf("error was nil")
+	}
+}

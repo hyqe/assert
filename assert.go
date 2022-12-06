@@ -1,12 +1,21 @@
 package assert
 
-import "testing"
+import (
+	"testing"
+)
+
+func Want[T comparable](t *testing.T, want, got T) {
+	if want == got {
+		return
+	}
+	t.Fatalf("\nwant: %v\ngot: %v\n", want, got)
+}
 
 func Eq[T comparable](t *testing.T, a, b T) {
 	if a == b {
 		return
 	}
-	t.Fatalf("%v != %v", a, b)
+	t.Fatalf("%v was not equal to %v", a, b)
 }
 
 type Number interface {
@@ -17,28 +26,28 @@ func GT[T Number](t *testing.T, a, b T) {
 	if a > b {
 		return
 	}
-	t.Fatalf("%v < %v", a, b)
+	t.Fatalf("%v was not greater than %v", a, b)
 }
 
 func LT[T Number](t *testing.T, a, b T) {
 	if a < b {
 		return
 	}
-	t.Fatalf("%v > %v", a, b)
+	t.Fatalf("%v was not less than %v", a, b)
 }
 
 func GE[T Number](t *testing.T, a, b T) {
 	if a >= b {
 		return
 	}
-	t.Fatalf("%v < %v", a, b)
+	t.Fatalf("%v is not greater than or equal to %v", a, b)
 }
 
 func LE[T Number](t *testing.T, a, b T) {
 	if a <= b {
 		return
 	}
-	t.Fatalf("%v > %v", a, b)
+	t.Fatalf("%v is not less than or equal to %v", a, b)
 }
 
 func Nil(t *testing.T, v any) {

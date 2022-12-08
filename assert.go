@@ -96,3 +96,60 @@ func NotEmpty(t *testing.T, s string) {
 		t.Fatalf("string was empty")
 	}
 }
+
+func of[T comparable](s []T, has ...T) bool {
+	source := make(map[T]struct{}, 0)
+	matched := make(map[T]struct{}, 0)
+
+	for _, v := range has {
+		source[v] = struct{}{}
+	}
+
+	for _, a := range s {
+		if len(has) < 1 {
+			break
+		}
+		for b := range source {
+			if a == b {
+				matched[b] = struct{}{}
+				break
+			}
+		}
+	}
+	return len(matched) == len(source)
+}
+
+func Of[T comparable](t *testing.T, slice []T, has ...T) {
+	if !of(slice, has...) {
+		t.Fatalf("%#v did not contain %#v", slice, has)
+	}
+}
+
+func NotOf[T comparable](t *testing.T, slice []T, has ...T) {
+	if of(slice, has...) {
+		t.Fatalf("%#v did not contain %#v", slice, has)
+	}
+}
+
+func in[K, V comparable](m map[K]V, has map[K]V) bool {
+	matched := make(map[K]V, 0)
+
+	for k, v := range m {
+		if v == has[k] {
+			matched[k] = v
+		}
+	}
+	return len(matched) == len(has)
+}
+
+func In[K, V comparable](t *testing.T, m map[K]V, has map[K]V) {
+	if !in(m, has) {
+		t.Fatalf("%#v did not contain %#v", m, has)
+	}
+}
+
+func NotIn[K, V comparable](t *testing.T, m map[K]V, has map[K]V) {
+	if in(m, has) {
+		t.Fatalf("%#v contain %#v", m, has)
+	}
+}

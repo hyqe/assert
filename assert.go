@@ -1,6 +1,7 @@
 package assert
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -81,5 +82,17 @@ func NoErr(t *testing.T, err error) {
 func Err(t *testing.T, err error) {
 	if err == nil {
 		t.Fatalf("error was nil")
+	}
+}
+
+func Empty(t *testing.T, s string) {
+	if strings.TrimSpace(s) != "" {
+		t.Fatalf("string was not empty: %v", s)
+	}
+}
+
+func NotEmpty(t *testing.T, s string) {
+	if strings.TrimSpace(s) == "" {
+		t.Fatalf("string was empty")
 	}
 }
